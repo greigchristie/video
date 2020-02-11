@@ -285,13 +285,15 @@ echo "<h2>Movie not found</h2>";
 ██       ██████  ██   ████  ██████    ██    ██  ██████  ██   ████ ███████
 */
 
-$apikey = getenv('OMDB_TOKEN');
+
 
 function curlThis($searchterm) {
+	$apikey = getenv('OMDB_TOKEN');
+	// echo "$apikey<br>";
 $url = "http://www.omdbapi.com/?$searchterm&plot=full&apikey=$apikey";
 
       // echo "service url<pre>";
-       // echo $url."<br />";
+      //  echo $url."<br />";
       // echo "</pre>";
 //  Initiate curl
 $ch = curl_init();
