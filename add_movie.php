@@ -56,13 +56,13 @@ if (isset($_POST['type'])) {
 }
 if (isset($_POST['region'])) {
 	$region = $_POST['region'];
-	print_r($region);
-	echo "<br>";
+	// print_r($region);
+	// echo "<br>";
 }
 if (isset($_POST['format'])) {
 	$format = $_POST['format'];
-	print_r($format);
-	echo "<br>";
+	// print_r($format);
+	// echo "<br>";
 }
 if (isset($_POST['shelfmark'])) {
 	$shelfmark = $_POST['shelfmark'];
@@ -85,11 +85,27 @@ if (isset($title)) {
 	include('header.php');
 if ($type == "movie") {
 $movie_id = addMovie($title, $sort_title, $year, $released, $runtime, $plot, $imdb_score, $imdb_id, $shelfmark, $notes, $status);
-echo "<p>$movie_id</p>";
-} 
+// echo "<p>$movie_id</p>";
+		$result = getMovieDetails($movie_id);
+		while ($row = $result->fetch_assoc()) {
+				$add_title = $row['movie_title'];
+				$add_year = $row['movie_year'];
+
+				echo "<h2>Added <a href='movie.php?movie=$movie_id'>$add_title ($add_year)</a></h2>";
+				echo "<a href='index.php'>Search Again</a>";
+		}
+}
 elseif ($type == "series") {
 $movie_id = addSeries($title, $sort_title, $year, $released, $runtime, $plot, $imdb_score, $imdb_id, $shelfmark, $season, $episode, $notes, $status);
-echo "<p>$movie_id</p>";
+// echo "<p>$movie_id</p>";
+		$result = getMovieDetails($movie_id);
+		while ($row = $result->fetch_assoc()) {
+				$add_title = $row['movie_title'];
+				$add_year = $row['movie_year'];
+
+				echo "<h2>Added <a href='movie.php?movie=$movie_id'>$add_title ($year)</a></h2>";
+				echo "<a href='index.php'>Search Again</a>";
+		}
 }
 
 
@@ -104,16 +120,27 @@ echo "<p>$movie_id</p>";
 	echo doResources($type,$movie_id,"type",8);
 	echo doArrayedResources($region,$movie_id,"region",9);
 	echo doArrayedResources($format,$movie_id,"format",10);
+
+
 	}
 
 } else { // make sure the form has been submitted
 	echo "<title>Error adding movie</title>";
 	include('header.php');
 	echo "<h2>Insufficient details provided to add this item</h2>";
+	echo "<a href='index.php'>Search Again</a>";
 }
 ?>
 
 <?php
+/**
+███████ ██    ██ ███    ██  ██████ ████████ ██  ██████  ███    ██ ███████
+██      ██    ██ ████   ██ ██         ██    ██ ██    ██ ████   ██ ██
+█████   ██    ██ ██ ██  ██ ██         ██    ██ ██    ██ ██ ██  ██ ███████
+██      ██    ██ ██  ██ ██ ██         ██    ██ ██    ██ ██  ██ ██      ██
+██       ██████  ██   ████  ██████    ██    ██  ██████  ██   ████ ███████
+*/
+
 // functions specific to this form
 
 function doResources($item_value,$movie_id,$item_type,$resource_type_id) {
@@ -121,9 +148,9 @@ function doResources($item_value,$movie_id,$item_type,$resource_type_id) {
 	$values = explode(', ',$item_value);
 	$item_id = "";
 	foreach($values as $value) {
-		echo "<h3>$value</h3>";
+		// echo "<h3>$value</h3>";
 		$resource_id = checkValueExistsGetIdOrInsertNew($item_type,$value,$movie_id);
-		echo "<h4>$resource_id</h4>";
+		// echo "<h4>$resource_id</h4>";
 		$linkDir = addToManyLink($movie_id,$resource_type_id,$resource_id);
 //		echo "<h3>$linkDir</h3>";
 	}
@@ -138,7 +165,7 @@ function doResources($item_value,$movie_id,$item_type,$resource_type_id) {
 function doArrayedResources($resource_array,$movie_id,$item_type,$resource_type_id) {
 	foreach($resource_array as $resource) {
 		$linkDir = addToManyLink($movie_id,$resource_type_id,$resource);
-		echo "<h3>$linkDir</h3>";	
+		// echo "<h3>$linkDir</h3>";
 	}
 }
 ?>
