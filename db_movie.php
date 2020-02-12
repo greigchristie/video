@@ -222,7 +222,7 @@ function getResourceDetails ($itemType,$itemValue) {
 
  	//Check if the particular item is already in the relevant table
  	$sql = "SELECT $id_variable FROM $table_variable WHERE $search_variable = '$itemValue'";
- 	echo "<em>$sql</em><br>";
+ 	// echo "<em>$sql</em><br>";
  		$result = $con->query($sql);
  		// print_r($result);
  		$row_cnt = $result->num_rows;
@@ -231,7 +231,7 @@ function getResourceDetails ($itemType,$itemValue) {
  		if ($row_cnt == 0) {
  			// DO INSERT
  			$item_add = "INSERT INTO $table_variable ($search_variable) VALUES ('$itemValue')";
- 			echo "$item_add<br>";
+ 			// echo "$item_add<br>";
  //			$inserted = mysqli_query($con, $item_add);
  			$inserted = $con->query($item_add);
  			if (!$inserted){
@@ -255,7 +255,7 @@ function getResourceDetails ($itemType,$itemValue) {
 
 function addMovie($title,$sort_title,$year,$release_date,$runtime,$plot,$imdb_score,$imdb_id,$shelfmark,$notes,$status) {
 	include('connected.php');
-	$date_added = date("Y-m-d");
+	$date_added = date("Y-m-d H:i:s");
 			//PREPARE MOVIE INSERT STATEMENT
 	$insert = 'INSERT INTO movie (movie_title,movie_sort_title,movie_year,movie_release_date,movie_runtime,movie_plot,movie_imdb_rating,movie_imdb_id,movie_shelfmark,movie_note,movie_status,movie_date_added) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)';
 	$insertStmt = $con->prepare($insert);
@@ -268,7 +268,7 @@ function addMovie($title,$sort_title,$year,$release_date,$runtime,$plot,$imdb_sc
 
 function addSeries($title, $sort_title, $year, $release_date, $runtime, $plot, $imdb_score, $imdb_id, $shelfmark, $season, $episode, $notes, $status) {
 	include('connected.php');
-	$date_added = date("Y-m-d");
+	$date_added = date("Y-m-d H:i:s");
 			//PREPARE MOVIE INSERT STATEMENT
 	$insert = 'INSERT INTO movie (movie_title,movie_sort_title,movie_year,movie_release_date,movie_runtime,movie_plot,movie_imdb_rating,movie_imdb_id,movie_shelfmark,movie_season,movie_episodes,movie_note,movie_status,movie_date_added) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)';
 	$insertStmt = $con->prepare($insert);
