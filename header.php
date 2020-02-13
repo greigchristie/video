@@ -13,7 +13,7 @@
 		<ul class="list-inline">
 			<li><a href="index.php">SEARCH</a></li>
 			<li><a href="all_movies.php">MOVIES</a></li>
-			<li><a href="recent.php">RECENT</a></li>
+			<li><a href="recent_movies.php">RECENT</a></li>
 			<li><a href="posters.php">POSTERS</a></li>
 			<li><a href="about.php">ABOUT</a></li>
 		</ul>
@@ -25,10 +25,10 @@
 <form action="search.php" method="get">
 	<div class="input-group">
   <input type="text" class="form-control" name="requery" placeholder="Keyword search" />
-  	<span class="input-group-btn">  
-  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button>  
+  	<span class="input-group-btn">
+  <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-search"></span> Search</button>
 </span>
-</form>  
+</form>
 </div>
 
 </div>
