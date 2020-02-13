@@ -94,6 +94,55 @@ function getAllMovies() {
 
 	}
 
+	function getAllMoviesForResourceType($movie_resource_type_id, $movie_resource_id) {
+		include('connected.php');
+
+		/* create a prepared statement */
+		if ($stmt = $con->prepare("select movie.movie_id, movie.movie_title, movie.movie_year, movie_link_many.movie_resource_id from movie, movie_link_many where movie.movie_id = movie_link_many.movie_id and movie_link_many.movie_resource_type_id = ? and movie_link_many.movie_resource_id = ?")) {
+
+		/* bind parameters for markers */
+		$stmt->bind_param("ii", $movie_resource_type_id, $movie_resource_id);
+
+		/* execute query */
+		$stmt->execute();
+
+		/* instead of bind_result: */
+		$result = $stmt->get_result();
+
+		return($result);
+		/* close statement */
+		$stmt->close();
+	    }
+
+		/* close connection */
+		$con->close();
+
+		}
+		function getAllMoviesForResourceTypeSortIdDesc($movie_resource_type_id, $movie_resource_id) {
+			include('connected.php');
+
+			/* create a prepared statement */
+			if ($stmt = $con->prepare("select movie.movie_id, movie.movie_title, movie.movie_year, movie_link_many.movie_resource_id from movie, movie_link_many where movie.movie_id = movie_link_many.movie_id and movie_link_many.movie_resource_type_id = ? and movie_link_many.movie_resource_id = ? order by movie.movie_id desc")) {
+
+			/* bind parameters for markers */
+			$stmt->bind_param("ii", $movie_resource_type_id, $movie_resource_id);
+
+			/* execute query */
+			$stmt->execute();
+
+			/* instead of bind_result: */
+			$result = $stmt->get_result();
+
+			return($result);
+			/* close statement */
+			$stmt->close();
+		    }
+
+			/* close connection */
+			$con->close();
+
+			}
+
 function getResourceList() {
 	include('connected.php');
 
