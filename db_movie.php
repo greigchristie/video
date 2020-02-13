@@ -73,7 +73,7 @@ function getAllMovies() {
 	include('connected.php');
 
 	/* create a prepared statement */
-	if ($stmt = $con->prepare("SELECT * from movie order by movie_title")) {
+	if ($stmt = $con->prepare("SELECT * from movie order by movie_sort_title")) {
 
 	/* bind parameters for markers */
 	//$stmt->bind_param("i", $movie_id);
