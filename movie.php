@@ -93,6 +93,26 @@ if ($movie_id == "") {
 			echo "&nbsp;";
 			echo "</div>";
 			echo "</div>\n";
+			if ($movie_season != "") {
+			echo "<div class='row'>";
+				echo "<div class='col-xs-6'>";
+				echo "<strong>Seasons:</strong> $movie_season";
+				echo "</div>";
+				echo "<div class='col-xs-6'>";
+				echo "&nbsp;";
+				echo "</div>";
+			echo "</div>\n";
+			}
+			if ($movie_episodes != "") {
+			echo "<div class='row'>";
+				echo "<div class='col-xs-6'>";
+				echo "<strong>Episodes:</strong> $movie_episodes";
+				echo "</div>";
+				echo "<div class='col-xs-6'>";
+				echo "&nbsp;";
+				echo "</div>";
+			echo "</div>\n";
+			}
 			echo "<div class='row'>";
 			echo "<div class='col-xs-6'>";
 			echo "<strong>Note:</strong> $movie_note";
