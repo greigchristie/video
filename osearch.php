@@ -365,11 +365,14 @@ function buildResourceRadioGroup ($resource_type,$resource_type_result) {
 		{
 			$resource_id = $row[$id_variable];
 			$resource_name = $row[$search_variable];
+			if ($resource_name == "Owned"){ //this is a hacky way of setting a checked value on a specific radio button
 			$radio .= "<label for='$resource_name' class='form-check-label'>$resource_name</label>\n";
-			$radio .= "<input type='radio' id='$resource_type' name='".$resource_type."' value='$resource_id' class='form-check-input'> \n";
-
-		}
-
+			$radio .= "<input type='radio' id='$resource_type' name='".$resource_type."' value='$resource_id' class='form-check-input' checked='checked'> \n";
+		} else {
+		$radio .= "<label for='$resource_name' class='form-check-label'>$resource_name</label>\n";
+		$radio .= "<input type='radio' id='$resource_type' name='".$resource_type."' value='$resource_id' class='form-check-input'> \n";
+	}
+	}
 	return $radio;
 }
 ?>
