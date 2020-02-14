@@ -118,9 +118,12 @@ $movie_id = addSeries($title, $sort_title, $year, $released, $runtime, $plot, $i
 	echo doResources($language,$movie_id,"language",6);
 	echo doResources($country,$movie_id,"country",7);
 	echo doResources($type,$movie_id,"type",8);
+	if (isset($region)) {
 	echo doArrayedResources($region,$movie_id,"region",9);
+	}
+	if (isset($format)) {
 	echo doArrayedResources($format,$movie_id,"format",10);
-
+	}
 
 	}
 
