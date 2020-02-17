@@ -1,6 +1,6 @@
 <?php
 include('pre_header.php');
-echo "<title>all_movies.php</title>";
+echo "<title>All Videos</title>";
 include('header.php');
 include('db_movie.php');
 echo "<h2>All Movies & Series</h2>";
