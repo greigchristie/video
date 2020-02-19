@@ -253,8 +253,8 @@ echo "<div class='col-xs-1'><label>Status </label></div>\n";
 echo "<div class='col-xs-3 form-check'>";
 echo "<fieldset>\n";
 $status_result = getAllResourceValuesByName('status');
-//echo buildResourceDropDown('format',$format_result);
-echo buildResourceRadioGroup('status',$status_result);
+echo buildResourceDropDown('status',$status_result);
+// echo buildResourceRadioGroup('status',$status_result);
 // echo buildResourceCheckBoxGroup('format',$format_result);
 echo "</fieldset>\n";
 echo "</div>\n";
@@ -317,13 +317,14 @@ return $result;
 function buildResourceDropDown($resource_type,$resource_type_result) {
 	$dropDown = "<select name='$resource_type'>\n";
 	$table_variable = "movie_" . $resource_type;
+	$id_variable = "movie_" . $resource_type . "_id";
 	$search_variable = $table_variable;
 	if ($resource_type == "actor" || $resource_type == "director" || $resource_type == "writer") {
 		$search_variable = $table_variable . "_full_name";
 	}
 	while ($row = $resource_type_result->fetch_assoc())
 		{
-			$resource_id = $row['id'];
+			$resource_id = $row[$id_variable];
 			$resource_name = $row[$search_variable];
 
 			$dropDown .= "<option value='$resource_id'>$resource_name</option>\n";
@@ -368,10 +369,10 @@ function buildResourceRadioGroup ($resource_type,$resource_type_result) {
 			if ($resource_name == "Owned"){ //this is a hacky way of setting a checked value on a specific radio button
 			$radio .= "<label for='$resource_name' class='form-check-label'>$resource_name</label>\n";
 			$radio .= "<input type='radio' id='$resource_type' name='".$resource_type."' value='$resource_id' class='form-check-input' checked='checked'> \n";
-		} else {
-		$radio .= "<label for='$resource_name' class='form-check-label'>$resource_name</label>\n";
-		$radio .= "<input type='radio' id='$resource_type' name='".$resource_type."' value='$resource_id' class='form-check-input'> \n";
-	}
+			} else {
+			$radio .= "<label for='$resource_name' class='form-check-label'>$resource_name</label>\n";
+			$radio .= "<input type='radio' id='$resource_type' name='".$resource_type."' value='$resource_id' class='form-check-input'> \n";
+			}
 	}
 	return $radio;
 }
