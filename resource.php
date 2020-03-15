@@ -30,6 +30,9 @@ $result = getResourceDetails ($resource_type,$resource_id);
 	if ($resource_type == "actor" || $resource_type == "director" || $resource_type == "writer") {
 		$name_variable .= "_full_name";
 	}
+		if ($resource_type == "item") {
+			$name_variable .= "_ean";
+		}
 		$resource_name = $row[$name_variable];
 		echo "<title>$resource_name Videos</title>";
 		include('header.php');

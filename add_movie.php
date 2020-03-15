@@ -67,6 +67,9 @@ if (isset($_POST['format'])) {
 if (isset($_POST['shelfmark'])) {
 	$shelfmark = $_POST['shelfmark'];
 }
+if (isset($_POST['item_ean'])) {
+	$item_ean = $_POST['item_ean'];
+}
 if (isset($_POST['season'])) {
 	$season = $_POST['season'];
 }
@@ -118,13 +121,20 @@ $movie_id = addSeries($title, $sort_title, $year, $released, $runtime, $plot, $i
 	echo doResources($language,$movie_id,"language",6);
 	echo doResources($country,$movie_id,"country",7);
 	echo doResources($type,$movie_id,"type",8);
-	if (isset($region)) {
-	echo doArrayedResources($region,$movie_id,"region",9);
-	}
-	if (isset($format)) {
-	echo doArrayedResources($format,$movie_id,"format",10);
-	}
-
+		if ($item_ean != "") {
+			// if we're adding an item then add item
+			$item_id = addItem($item_ean,$status);
+			echo addToManyLink($movie_id,12,$item_id);
+		if (isset($region)) {
+		echo addToItemLink($item_id,5,$region);
+		}
+		if (isset($format)) {
+		echo addToItemLink($item_id,1,$format);
+		}
+		if (isset($shelfmark)) {
+		echo addToItemLink($item_id,3,$shelfmark);
+		}
+		}
 	}
 
 } else { // make sure the form has been submitted

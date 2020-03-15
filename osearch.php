@@ -204,33 +204,6 @@ echo "<div class='col-xs-1'><label>Type </label></div>\n";
 echo "<div class='col-xs-3'><input type='text' id='type' name='type' value='$type'></input></div>\n";
 echo "<div class='col-xs-8'></div>\n";
 echo "</div>\n";
-echo "<div class='row'>\n";
-echo "<div class='col-xs-1'><label>Region </label></div>\n";
-echo "<div class='col-xs-3 form-check form-check-inline'>";
-echo "<fieldset>\n";
-$format_result = getAllResourceValuesByName('region');
-echo buildResourceCheckBoxGroup('region',$format_result);
-echo "</fieldset>\n";
-echo "</div>\n";
-echo "<div class='col-xs-8'></div>\n";
-echo "</div>\n";
-echo "<div class='row'>\n";
-echo "<div class='col-xs-1'><label>Format </label></div>\n";
-echo "<div class='col-xs-3 form-check'>";
-echo "<fieldset>\n";
-$format_result = getAllResourceValuesByName('format');
-//echo buildResourceDropDown('format',$format_result);
-//echo buildResourceRadioGroup('format',$format_result);
-echo buildResourceCheckBoxGroup('format',$format_result);
-echo "</fieldset>\n";
-echo "</div>\n";
-echo "<div class='col-xs-8'></div>\n";
-echo "</div>\n";
-echo "<div class='row'>\n";
-echo "<div class='col-xs-1'><label>Shelfmark </label></div>\n";
-echo "<div class='col-xs-3'><input type='text' id='shelfmark' name='shelfmark'></input></div>\n";
-echo "<div class='col-xs-8'></div>\n";
-echo "</div>\n";
 if ($type == "series") {
 echo "<div class='row'>\n";
 echo "<div class='col-xs-1'><label>No. Seasons </label></div>\n";
@@ -248,16 +221,21 @@ echo "<div class='col-xs-1'><label>Notes </label></div>\n";
 echo "<div class='col-xs-6'><textarea rows='7' cols='70' id='notes' name='notes'></textarea></div>\n";
 echo "<div class='col-xs-5'></div>\n";
 echo "</div>\n";
-echo "<div class='row'>\n";
-echo "<div class='col-xs-1'><label>Status </label></div>\n";
-echo "<div class='col-xs-3 form-check'>";
+echo "<div class='col-xs-1'><label>Item(s) </label></div>\n";
+echo "<div class='col-xs-10 form-check'>";
 echo "<fieldset>\n";
+echo "EAN: <input type='text' id='item_ean' name='item_ean'></input>\n";
 $status_result = getAllResourceValuesByName('status');
+$region_result = getAllResourceValuesByName('region');
+$format_result = getAllResourceValuesByName('format');
+$shelfmark_result = getAllResourceValuesByName('shelfmark');
 echo buildResourceDropDown('status',$status_result);
-// echo buildResourceRadioGroup('status',$status_result);
-// echo buildResourceCheckBoxGroup('format',$format_result);
+echo buildResourceDropDown('region',$region_result);
+echo buildResourceDropDown('format',$format_result);
+echo buildResourceDropDown('shelfmark',$shelfmark_result);
 echo "</fieldset>\n";
 echo "</div>\n";
+echo "<div class='col-xs-1'></div>\n";
 echo "<div class='row'>";
 echo "</div>";
 echo "<div class='row'>\n";
@@ -324,6 +302,7 @@ function buildResourceDropDown($resource_type,$resource_type_result) {
 	}
 	while ($row = $resource_type_result->fetch_assoc())
 		{
+			// print_r($row);
 			$resource_id = $row[$id_variable];
 			$resource_name = $row[$search_variable];
 

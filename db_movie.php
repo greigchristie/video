@@ -167,6 +167,30 @@ function getResourceList() {
 	$con->close();
 	}
 
+	function getItemResourceList() {
+		include('connected.php');
+
+		/* create a prepared statement */
+		if ($stmt = $con->prepare("SELECT * from item_resources")) {
+
+		/* bind parameters for markers */
+		//$stmt->bind_param("i", $movie_id);
+
+		/* execute query */
+		$stmt->execute();
+
+		/* instead of bind_result: */
+		$result = $stmt->get_result();
+
+		return($result);
+		/* close statement */
+		$stmt->close();
+	    }
+
+		/* close connection */
+		$con->close();
+		}
+
 function getResourceIdByName($resource_name) {
 	include('connected.php');
 	// echo "<h3>gRIBN: $resource_name</h3>";
@@ -224,6 +248,29 @@ function getMovieResourceByTypeMovieId($resource_id,$movie_id) {
 	$con->close();
 	}
 
+	function getMovieResourceByTypeItemId($resource_id,$item_id) {
+		include('connected.php');
+	//	echo "<p>select * from movie_link_item where item_resource_type_id = $resource_id and item_id = $item_id</p>";
+		/* create a prepared statement */
+		if ($stmt = $con->prepare("SELECT * FROM movie_link_item WHERE item_resource_type_id = ? AND item_id = ?")) {
+
+		/* bind parameters for markers */
+		$stmt->bind_param("ii", $resource_id,$item_id);
+
+		/* execute query */
+		$stmt->execute();
+
+		/* instead of bind_result: */
+		$result = $stmt->get_result();
+
+		return($result);
+		/* close statement */
+		$stmt->close();
+	    }
+
+		/* close connection */
+		$con->close();
+		}
 
 function getResourceDetails ($itemType,$itemValue) {
 	include('connected.php');
@@ -241,6 +288,7 @@ function getResourceDetails ($itemType,$itemValue) {
 		// print_r($result);
 		return $result;
 }
+
 
 /**
 ██ ███    ██ ███████ ███████ ██████  ████████ ███████
@@ -302,6 +350,22 @@ function getResourceDetails ($itemType,$itemValue) {
 
  }
 
+ function addItem($movie_item_ean,$movie_status) {
+	 include('connected.php');
+ 	$date_added = date("Y-m-d H:i:s");
+ 			//PREPARE ITEM INSERT STATEMENT
+ 	$insert = 'INSERT INTO movie_item (movie_item_ean,movie_item_date_added,movie_item_owned) VALUES (?,?,?)';
+ 	$insertStmt = $con->prepare($insert);
+ 	//EXECUTE INSERT
+ 	$insertStmt->bind_param('ssi', $movie_item_ean, $date_added, $movie_status);
+     	$insertStmt->execute();
+     	$movieId = $con->insert_id;
+			$error = $con->error;
+			echo "$error";
+ 	return $movieId;
+
+ }
+
 function addMovie($title,$sort_title,$year,$release_date,$runtime,$plot,$imdb_score,$imdb_id,$shelfmark,$notes,$status) {
 	include('connected.php');
 	$date_added = date("Y-m-d H:i:s");
@@ -341,6 +405,20 @@ function addToManyLink ($movie_id,$resource_type_id,$resource_id) {
 	$insertStmt = $con->prepare($insert);
 	//EXECUTE INSERT
 	$insertStmt->bind_param('iii', $movie_id,$resource_type_id,$resource_id);
+    	$insertStmt->execute();
+    	$movieId = $con->insert_id;
+	return $movieId;
+}
+
+function addToItemLink ($item_id,$resource_type_id,$resource_id) {
+	include('connected.php');
+				//PREPARE ADD ITEM RESOURCE ID INSERT STATEMENT
+//				echo "<p>IN ITEM RESOURCE: $item_id - $resource_type_id - $resource_id</p>";
+
+	$insert = 'INSERT INTO movie_link_item (item_id,item_resource_type_id,item_resource_id) VALUES (?,?,?)';
+	$insertStmt = $con->prepare($insert);
+	//EXECUTE INSERT
+	$insertStmt->bind_param('iii', $item_id,$resource_type_id,$resource_id);
     	$insertStmt->execute();
     	$movieId = $con->insert_id;
 	return $movieId;

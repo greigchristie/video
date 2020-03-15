@@ -154,6 +154,7 @@ if ($movie_id == "") {
 		{
 			$resource_id = $resso['movie_resources_id'];
 			$resource_name = $resso['movie_resource_type'];
+
 //			$resource_table_name = "movie_".strtolower($resource_name);
 			echo "<div class='row'>";
 			echo "<div class='col-xs-6'>";
@@ -186,10 +187,13 @@ if ($movie_id == "") {
 						if ($resource_name_low == "actor" || $resource_name_low == "director" || $resource_name_low == "writer") {
 						$mri_search_variable = $mri_search_variable . "_full_name";
 						}
+						if ($resource_name_low == "item") {
+							$mri_search_variable = $mri_search_variable . "_ean";
+						}
 
 						$mri_id = $mri_res[$mri_id_variable];
 						$mri_name = $mri_res[$mri_search_variable];
-						if ($resource_name == "Type") {$mri_name = ucfirst($mri_name);};
+						if ($resource_name == "Type") {$mri_name = ucfirst($mri_name);}
 						$mri_link .= "<a href='resource.php?resource=".$resource_name_low."&resource_id=$mri_id' class='btn btn-info'>$mri_name</a> ";
 					}
 					$mri_link = rtrim($mri_link,', ');
@@ -210,5 +214,22 @@ if ($movie_id == "") {
 		}
 	} //end check not empty movie id
 
+
 	include('footer.php');
+?>
+
+<?php
+/**
+███████ ██    ██ ███    ██  ██████ ████████ ██  ██████  ███    ██ ███████
+██      ██    ██ ████   ██ ██         ██    ██ ██    ██ ████   ██ ██
+█████   ██    ██ ██ ██  ██ ██         ██    ██ ██    ██ ██ ██  ██ ███████
+██      ██    ██ ██  ██ ██ ██         ██    ██ ██    ██ ██  ██ ██      ██
+██       ██████  ██   ████  ██████    ██    ██  ██████  ██   ████ ███████
+*/
+
+	function getResourcesforMovie($resource_id,$resource_name) {
+
+
+	}
+
 ?>
